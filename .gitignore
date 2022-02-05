@@ -1,3 +1,5 @@
 /static
 geckodriver.log
 .idea
+db.sqlite3
+.env
