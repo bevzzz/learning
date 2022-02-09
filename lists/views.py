@@ -1,6 +1,7 @@
 # Third-party libraries
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
+from django.core.exceptions import ValidationError
 
 # Local libraries
 from lists.models import Item, List
@@ -12,7 +13,14 @@ def home_page(request) -> HttpResponse:
 
 def new_list(request) -> HttpResponse:
     list_ = List.objects.create()
-    Item.objects.create(text=request.POST["item_text"], list=list_)
+    item = Item(text=request.POST["item_text"], list=list_)
+    try:
+        item.full_clean()
+        item.save()
+    except ValidationError:
+        list_.delete()
+        error = "You can't have an empty list item"
+        return render(request, "home.html", {"error": error})
     return redirect(f"/lists/{list_.id}/")
 
 
