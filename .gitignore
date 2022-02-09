@@ -1,0 +1,7 @@
+/static
+geckodriver.log
+.idea
+db.sqlite3
+.env
+**/__pycache__/**
+
