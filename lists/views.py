@@ -5,10 +5,11 @@ from django.core.exceptions import ValidationError
 
 # Local libraries
 from lists.models import Item, List
+from lists.forms import ItemForm
 
 
 def home_page(request) -> HttpResponse:
-    return render(request, "home.html")
+    return render(request, "home.html", {"form": ItemForm()})
 
 
 def new_list(request) -> HttpResponse:

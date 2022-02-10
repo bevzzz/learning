@@ -4,16 +4,22 @@ from django.utils.html import escape
 
 # Local libraries
 from lists.models import Item, List
+from lists.forms import ItemForm
 
 
 class HomePageTest(TestCase):
 
-    def test_home_page_returns_correct_html(self):
+    def test_uses_home_template(self):
         # arrange act
         response = self.client.get("/")
         # assert
         self.assertTemplateUsed(response, "home.html")
 
+    def test_home_page_uses_item_form(self):
+        # arrange act
+        response = self.client.get("/")
+        # assert
+        self.assertIsInstance(response.context["form"], ItemForm)
 
 class NewListTest(TestCase):
 
