@@ -4,6 +4,7 @@ import re
 # Third-party libraries
 from django.core import mail
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 
 # Local libraries
 from functional_tests.base import FunctionalTest
@@ -49,5 +50,14 @@ class LoginTest(FunctionalTest):
         self.wait_for(
             lambda: self.browser.find_element_by_link_text("Log out")
         )
-        navbar = self.browser.find_element_by_css_selector(".navbar")
+        navbar = self.browser.find_element(By.CLASS_NAME, "navbar-text")
         self.assertIn(TEST_EMAIL, navbar.text)
+
+        # Now she logs out
+        self.browser.find_element(By.LINK_TEXT, "Log out").click()
+        # She is logged out
+        self.wait_for(
+            lambda: self.browser.find_element(By.NAME, "email")
+        )
+        navbar = self.browser.find_element(By.CLASS_NAME, "navbar-text")
+        self.assertNotIn(TEST_EMAIL, navbar.text)

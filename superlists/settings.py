@@ -138,6 +138,8 @@ EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD")
 EMAIL_PORT = config("EMAIL_PORT")
 EMAIL_USE_TLS = True
 
+LOGOUT_REDIRECT_URL = "home"
+
 
 LOGGING = {
     'version': 1,
